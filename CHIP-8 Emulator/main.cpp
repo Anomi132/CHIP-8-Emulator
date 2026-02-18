@@ -3,7 +3,7 @@
 #include <SDL3/SDL_main.h>
 #include <iostream>
 
-#include <ClockManager.hpp>
+#include <Emulator.hpp>
 
 static SDL_Window* window = NULL;
 static SDL_Renderer* renderer = NULL;
@@ -48,7 +48,7 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 
     double deltaTime = (double)(currentTime - lastTime) / 1000000000.0;
 
-    ClockManager::update(deltaTime);
+    Emulator::update(deltaTime);
 
     const double now = ((double)SDL_GetTicks()) / 1000.0;  
     const float red = (float)(0.5 + 0.5 * SDL_sin(now));

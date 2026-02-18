@@ -2,7 +2,7 @@
 add_executable(chip8 
     "main.cpp" 
     
- )
+  "src/Emulator.cpp")
 
 set_property(TARGET chip8 PROPERTY CXX_STANDARD 20)
 

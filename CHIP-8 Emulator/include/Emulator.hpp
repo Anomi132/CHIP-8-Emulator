@@ -8,7 +8,7 @@
 	It can also perfroms N number of CPU cycles
 */
 
-static class ClockManager
+static class Emulator
 {
 private:
 	static inline double m_accumulator = 0.0;
@@ -16,15 +16,5 @@ private:
 
 public:
 
-	static void update(double deltaTime)
-	{
-		m_accumulator += deltaTime;
-
-		static int testCounter = 0;
-		while (m_accumulator >= TIME_PER_CYCLE)
-		{
-			std::cout << testCounter++ << std::endl;
-			m_accumulator -= TIME_PER_CYCLE;
-		}
-	}
+	static void update(double deltaTime);
 };
