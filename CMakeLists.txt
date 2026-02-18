@@ -6,7 +6,10 @@ add_subdirectory(external/SDL2)
 
 add_subdirectory("CHIP-8 Emulator")
 
-# Include dirs for SDL2
 target_include_directories(chip8 PRIVATE 
     "${CMAKE_SOURCE_DIR}/external/SDL2/include"
+)
+
+target_include_directories(chip8 PRIVATE 
+    "${CMAKE_SOURCE_DIR}/Chip-8 Emulator/include"
 )
