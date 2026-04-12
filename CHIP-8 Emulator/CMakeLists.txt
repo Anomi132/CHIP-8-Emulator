@@ -1,8 +1,12 @@
 ﻿
+
+set(mySources
+    "src/emulator.cpp"
+    "src/memory.cpp"
+)
 add_executable(chip8 
-    "main.cpp" 
-    
-  "src/Emulator.cpp")
+    "main.cpp" ${mySources}
+)
 
 set_property(TARGET chip8 PROPERTY CXX_STANDARD 20)
 

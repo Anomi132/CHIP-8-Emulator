@@ -3,7 +3,7 @@
 #include <SDL3/SDL_main.h>
 #include <iostream>
 
-#include <Emulator.hpp>
+#include "include/Emulator.hpp"
 
 static SDL_Window* window = NULL;
 static SDL_Renderer* renderer = NULL;
@@ -49,16 +49,6 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     double deltaTime = (double)(currentTime - lastTime) / 1000000000.0;
 
     Emulator::update(deltaTime);
-
-    const double now = ((double)SDL_GetTicks()) / 1000.0;  
-    const float red = (float)(0.5 + 0.5 * SDL_sin(now));
-    const float green = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 2 / 3));
-    const float blue = (float)(0.5 + 0.5 * SDL_sin(now + SDL_PI_D * 4 / 3));
-    SDL_SetRenderDrawColorFloat(renderer, red, green, blue, SDL_ALPHA_OPAQUE_FLOAT);  
-
-    SDL_RenderClear(renderer);
-
-    SDL_RenderPresent(renderer);
         
     lastTime = currentTime;
 

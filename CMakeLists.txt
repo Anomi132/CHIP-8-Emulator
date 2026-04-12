@@ -11,5 +11,5 @@ target_include_directories(chip8 PRIVATE
 )
 
 target_include_directories(chip8 PRIVATE 
-    "${CMAKE_SOURCE_DIR}/Chip-8 Emulator/include"
+    "${CMAKE_SOURCE_DIR}/CHIP-8 Emulator/include"
 )

@@ -1,5 +1,7 @@
-#include <SDL3/SDL.h>
+#pragma once
 #include <iostream>
+
+#include "CPU.hpp"
 
 /*
 	The ClockManager makes sure that the emulator runs at the set clockspeed.
@@ -13,6 +15,8 @@ static class Emulator
 private:
 	static inline double m_accumulator = 0.0;
 	static constexpr double TIME_PER_CYCLE = 1.0 / 400; // For 400Hz
+
+	static CPU emulatorCPU;
 
 public:
 
