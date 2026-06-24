@@ -48,7 +48,14 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 
     double deltaTime = (double)(currentTime - lastTime) / 1000000000.0;
 
-    Emulator::update(deltaTime);
+    try
+    {
+        Emulator::update(deltaTime);
+    }
+    catch(const char* msg)
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", msg, NULL); // Window set to NULL so you can stil exit incase of a error loop
+    }
         
     lastTime = currentTime;
 

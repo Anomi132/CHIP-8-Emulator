@@ -13,7 +13,7 @@
 static class Emulator
 {
 private:
-	static inline double m_accumulator = 0.0;
+	static double m_accumulator;
 	static constexpr double TIME_PER_CYCLE = 1.0 / 400; // For 400Hz
 
 	static CPU emulatorCPU;

@@ -5,10 +5,10 @@
 #pragma once	
 #include <vector>
 
-class Memory
+class MMU
 {
 private:
-	static uint8_t memoryMap[4096];
+	static std::array<uint8_t, 4096> memoryMap;
 
 public:
 

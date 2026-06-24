@@ -1,5 +1,8 @@
 #pragma once
 
+#include <array>
+#include <stack>
+
 enum registers
 {
 	V0,
@@ -29,7 +32,7 @@ enum registers
 class CPU
 {
 private:
-	uint8_t registers[16] = { 0 };
+	std::array <uint8_t, 16> registers = { 0 };
 	uint16_t addressRegisterI;
 
 	uint8_t delayTimer = 0;
@@ -38,7 +41,7 @@ private:
 	uint16_t programCounter = 0x200; // Start of normal most CHIP-8 programs
 	uint8_t stackPointer = 0;
 
-	uint16_t stack[16] = { 0 };
+	std::stack<uint16_t> stack;
 
 private:
 	 inline uint16_t getNextInstruction();
