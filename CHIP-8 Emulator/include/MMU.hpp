@@ -3,15 +3,15 @@
 
 */
 #pragma once	
-#include <vector>
+#include <array>
 
 class MMU
 {
 private:
-	static std::array<uint8_t, 4096> memoryMap;
+	std::array<uint8_t, 4096> _memoryMap;
 
 public:
 
-	static uint8_t readMemorryAddress(const uint16_t address);
-	static void writeToMemorryAddress(const uint16_t address, const uint8_t data);
+	uint8_t readMemorryAddress(const uint16_t address);
+	void writeToMemorryAddress(const uint16_t address, const uint8_t data);
 };

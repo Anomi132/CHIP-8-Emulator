@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include "CPU.hpp"
+#include "MMU.hpp"
 
 /*
 	The ClockManager makes sure that the emulator runs at the set clockspeed.
@@ -10,15 +11,19 @@
 	It can also perfroms N number of CPU cycles
 */
 
-static class Emulator
+class Emulator
 {
 private:
-	static double m_accumulator;
-	static constexpr double TIME_PER_CYCLE = 1.0 / 400; // For 400Hz
+	double _accumulator;
+	double TIME_PER_CYCLE = 1.0 / 400; // For 400Hz
 
-	static CPU emulatorCPU;
+	CPU _emulatorCPU;
+	MMU _emulatorMMU;
+
 
 public:
 
-	static void update(double deltaTime);
+	Emulator();
+
+	void update(double deltaTime);
 };

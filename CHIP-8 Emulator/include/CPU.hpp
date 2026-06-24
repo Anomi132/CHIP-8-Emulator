@@ -32,21 +32,25 @@ enum registers
 class CPU
 {
 private:
-	std::array <uint8_t, 16> registers = { 0 };
-	uint16_t addressRegisterI;
+	std::array <uint8_t, 16> _registers = { 0 };
+	uint16_t _addressRegisterI;
 
-	uint8_t delayTimer = 0;
-	uint8_t soundTimer = 0;
+	uint8_t _delayTimer = 0;
+	uint8_t _soundTimer = 0;
 
-	uint16_t programCounter = 0x200; // Start of normal most CHIP-8 programs
-	uint8_t stackPointer = 0;
+	uint16_t _programCounter = 0x200; // Start of normal most CHIP-8 programs
+	uint8_t _stackPointer = 0;
 
-	std::stack<uint16_t> stack;
+	std::stack<uint16_t> _stack;
+
+	MMU _mmuRefrence;
 
 private:
-	 inline uint16_t getNextInstruction();
-	 void decodeAndExecuteInstruction(const uint16_t opcode);
+	uint16_t getNextInstruction();
+	void executeOptCode(const uint16_t opcode);
 
 public:
-	 void runClockCycle();
+	CPU(MMU mmu) : _mmuRefrence(mmu) {}
+
+	void runClockCycle();
 };

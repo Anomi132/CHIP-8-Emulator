@@ -1,14 +1,30 @@
 #include "MMU.hpp"
+
 #include <array>
+#include <string>
 
-std::array<uint8_t, 4096> MMU::memoryMap;
-
+/*
+	Read memorry location at [address]
+*/
 uint8_t MMU::readMemorryAddress(const uint16_t address)
 {
-	return memoryMap[address];
+	if (address >= 4096) // Max memorry
+	{
+		throw "Accessed address outside memorry range (0-4095): " + std::to_string(address);
+	}
+
+	return _memoryMap[address];
 }
 
+/*
+	Write [data] to memorry address at [address]
+*/
 void MMU::writeToMemorryAddress(const uint16_t address, const uint8_t data)
 {
-	memoryMap[address] = data;
+	if (address >= 4096) // Max memorry
+	{
+		throw "Written address outside memorry range (0-4095): " + std::to_string(address);
+	}
+
+	_memoryMap[address] = data;
 }
