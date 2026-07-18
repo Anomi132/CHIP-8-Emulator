@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "include/Emulator.hpp"
+#include "include/display.hpp"
 
 static SDL_Window* window = NULL;
 static SDL_Renderer* renderer = NULL;
@@ -20,11 +21,11 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
         return SDL_APP_FAILURE;
     }
 
-    if (!SDL_CreateWindowAndRenderer("examples/renderer/clear", 640, 480, SDL_WINDOW_NOT_FOCUSABLE, &window, &renderer)) {
+    if (!SDL_CreateWindowAndRenderer("examples/renderer/clear", 64 * DISPLAY_SCALE_FACTOR, 32 * DISPLAY_SCALE_FACTOR, SDL_WINDOW_NOT_FOCUSABLE, &window, &renderer)) {
         SDL_Log("Couldn't create window/renderer: %s", SDL_GetError());
         return SDL_APP_FAILURE;
     }
-    SDL_SetRenderLogicalPresentation(renderer, 640, 480, SDL_LOGICAL_PRESENTATION_LETTERBOX);
+    SDL_SetRenderLogicalPresentation(renderer, 64 * DISPLAY_SCALE_FACTOR, 32 * DISPLAY_SCALE_FACTOR, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
     return SDL_APP_CONTINUE;  
 }
@@ -48,9 +49,11 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 
     double deltaTime = (double)(currentTime - lastTime) / 1000000000.0;
 
+    static Emulator emulator = Emulator(&renderer);
+
     try
     {
-        Emulator::update(deltaTime);
+        emulator.update(deltaTime);
     }
     catch(const char* msg)
     {

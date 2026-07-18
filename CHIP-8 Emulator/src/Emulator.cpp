@@ -1,11 +1,15 @@
+#include <SDL3/SDL.h>
+
 #include "Emulator.hpp"
 #include "CPU.hpp"
 #include "MMU.hpp"
+#include "display.hpp"
 
-Emulator::Emulator()
+Emulator::Emulator(SDL_Renderer** renderer)
 {
 	_emulatorMMU = MMU();
 	_emulatorCPU = CPU(_emulatorMMU);
+	_emulatorDisplay = Display(renderer);
 }
 
 /*
@@ -19,6 +23,5 @@ void Emulator::update(double deltaTime)
 	{
 		//emulatorCPU.runClockCycle();
 		_accumulator -= TIME_PER_CYCLE;
-		throw "Test error message";
 	}
 }

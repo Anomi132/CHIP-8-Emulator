@@ -3,6 +3,7 @@
 
 #include "CPU.hpp"
 #include "MMU.hpp"
+#include "display.hpp"
 
 /*
 	The ClockManager makes sure that the emulator runs at the set clockspeed.
@@ -14,16 +15,16 @@
 class Emulator
 {
 private:
-	double _accumulator;
+	double _accumulator = 0.0;
 	double TIME_PER_CYCLE = 1.0 / 400; // For 400Hz
 
 	CPU _emulatorCPU;
 	MMU _emulatorMMU;
-
+	Display _emulatorDisplay;
 
 public:
 
-	Emulator();
+	Emulator(SDL_Renderer** renderer);
 
 	void update(double deltaTime);
 };

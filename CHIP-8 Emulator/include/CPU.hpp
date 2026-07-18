@@ -3,6 +3,8 @@
 #include <array>
 #include <stack>
 
+#include "MMU.hpp"
+
 enum registers
 {
 	V0,
@@ -33,7 +35,7 @@ class CPU
 {
 private:
 	std::array <uint8_t, 16> _registers = { 0 };
-	uint16_t _addressRegisterI;
+	uint16_t _addressRegisterI = 0x0;
 
 	uint8_t _delayTimer = 0;
 	uint8_t _soundTimer = 0;
@@ -51,6 +53,7 @@ private:
 
 public:
 	CPU(MMU mmu) : _mmuRefrence(mmu) {}
+	CPU() {}
 
 	void runClockCycle();
 };

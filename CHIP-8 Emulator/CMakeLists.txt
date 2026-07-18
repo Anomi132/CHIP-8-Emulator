@@ -3,7 +3,7 @@
 set(mySources
     "src/emulator.cpp"
     "src/MMU.cpp"
- "src/cpu.cpp")
+ "src/cpu.cpp" "src/display.cpp")
 add_executable(chip8 
     "main.cpp" ${mySources}
 )
