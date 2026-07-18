@@ -55,6 +55,7 @@ void CPU::executeOptCode(const opcode opcode)
 	switch (opcodeID)
 	{
 		case 0:
+		{
 			// 00E0 - CLS
 			if (sectionTwo == 0 && sectionThree == 0)
 			{
@@ -68,44 +69,54 @@ void CPU::executeOptCode(const opcode opcode)
 				_stackPointer--;
 			}
 			// 0nnn - SYS addr
-			else 
+			else
 			{
 				_programCounter = jumpAddress;
 			}
 			break;
+		}
 
 		// 1nnn - JP addr
 		case 1:
+		{
 			_programCounter = jumpAddress;
 			break;
+		}
 
 		// 2nnn - CALL addr
 		case 2:
+		{
 			_stackPointer++;
 			_stack.push(_programCounter);
 			_programCounter = jumpAddress;
 			break;
+		}
 
 		// 3xkk - SE Vx, byte
 		case 3:
+		{
 			uint16_t registerValue = _registers[registerNumber];
 			if (registerValue == compareNumber)
 			{
 				_programCounter += 2;
 			}
 			break;
+		}
 
 		// 4xkk - SNE Vx, byte
 		case 4:
+		{
 			uint16_t registerValue = _registers[registerNumber];
 			if (registerValue != compareNumber)
 			{
 				_programCounter += 2;
 			}
 			break;
+		}
 
 		// 5xy0 - SE Vx, Vy
 		case 5:
+		{
 			uint16_t registerValue1 = _registers[sectionOne];
 			uint16_t registerValue2 = _registers[sectionTwo];
 			if (registerValue1 == registerValue2)
@@ -113,18 +124,24 @@ void CPU::executeOptCode(const opcode opcode)
 				_programCounter += 2;
 			}
 			break;
+		}
 
 		// 6xkk - LD Vx, byte
 		case 6:
+		{
 			_registers[registerNumber] = compareNumber;
 			break;
+		}
 
 		// 7xkk - ADD Vx, byte
 		case 7:
+		{
 			_registers[registerNumber] += compareNumber;
 			break;
+		}
 
 		case 8:
+		{
 			// 8xy0 - LD Vx, Vy
 			if (sectionThree == 0)
 			{
@@ -195,9 +212,11 @@ void CPU::executeOptCode(const opcode opcode)
 				_registers[sectionOne] *= 2;
 			}
 			break;
+		}
 
 		// 9xy0 - SNE Vx, Vy
 		case 9:
+		{
 			uint16_t registerValue1 = _registers[sectionOne];
 			uint16_t registerValue2 = _registers[sectionTwo];
 			if (registerValue1 != registerValue2)
@@ -205,27 +224,36 @@ void CPU::executeOptCode(const opcode opcode)
 				_programCounter += 2;
 			}
 			break;
+		}
 
 		// Annn - LD I, addr
 		case 0xA:
+		{
 			_addressRegisterI = jumpAddress;
 			break;
+		}
 
 		// Bnnn - JP V0, addr
 		case 0xB:
+		{
 			_programCounter = jumpAddress + _registers[V0];
 			break;
+		}
 
 		// Cxkk - RND Vx, byte
 		case 0xC:
+		{
 			int randomNumber = rand() % 256;
 			_registers[sectionOne] = randomNumber & compareNumber;
 			break;
+		}
 
 		// Dxyn - DRW Vx, Vy, nibble
 		case 0xD:
+		{
 			bool collision = _displayRefrence->drawSprite(sectionOne, sectionTwo, _addressRegisterI, sectionThree);
 			_registers[VF] = collision;
 			break;
+		}
 	}
 }
