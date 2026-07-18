@@ -4,6 +4,7 @@
 #include <stack>
 
 #include "MMU.hpp"
+#include "display.hpp"
 
 enum registers
 {
@@ -69,13 +70,14 @@ private:
 	std::stack<uint16_t> _stack;
 
 	MMU* _mmuRefrence = nullptr;
+	Display* _displayRefrence = nullptr;
 
 private:
 	opcode getNextInstruction();
 	void executeOptCode(const opcode opcode);
 
 public:
-	CPU(MMU* mmu) : _mmuRefrence(mmu) {}
+	CPU(MMU* mmu, Display* display) : _mmuRefrence(mmu), _displayRefrence(display) {}
 	CPU() {}
 
 	void runClockCycle();

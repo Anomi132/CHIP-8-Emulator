@@ -53,7 +53,7 @@ void Display::draw()
 /*
     Reads n bytes from memorry and draws a sprite to position (x,y)
 */
-void Display::drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numberOfBytes)
+bool Display::drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numberOfBytes)
 {
     uint8_t sprite[15] = { 0 };
 
@@ -62,15 +62,20 @@ void Display::drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numb
         sprite[i] = _mmuRefrence->readMemorryAddress(address + i);
     }
 
+    bool collision = false;
     for (int byteNum = 0; byteNum < numberOfBytes; byteNum++)
     {
         for (int bitNum = 0; bitNum < 8; bitNum++)
         {
             uint8_t currentPixle = (sprite[byteNum] << bitNum) & 0x1;
             bool currentPixleState = _displayArray[(y + byteNum) % DEFAULT_HEIGHT][(x + bitNum) % DEFAULT_WIDTH];
-            currentPixleState ^= currentPixleState;
+            if ((currentPixleState ^ currentPixleState) != currentPixleState)
+            {
+                collision = true;
+            }
         }
     }
 
     draw();
+    return collision;
 }

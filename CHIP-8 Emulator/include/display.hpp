@@ -21,6 +21,6 @@ public:
 
 	void draw();
 	void clearScreen();
-	void drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numberOfBytes);
+	bool drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numberOfBytes);
 
 };
