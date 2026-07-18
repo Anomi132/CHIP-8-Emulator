@@ -1,9 +1,10 @@
 #include "display.hpp"
 
 
-Display::Display(SDL_Renderer** renderer)
+Display::Display(SDL_Renderer** renderer, MMU* mmu)
 {
-	_displayRenderer = *renderer;
+	_displayRendererRefrence = *renderer;
+    _mmuRefrence = mmu;
 }
 
 /*
@@ -11,20 +12,65 @@ Display::Display(SDL_Renderer** renderer)
 */
 void Display::clearScreen()
 {
-    SDL_RenderClear(_displayRenderer);
+    SDL_SetRenderDrawColor(_displayRendererRefrence, 0, 0, 0, 255);
+    SDL_RenderClear(_displayRendererRefrence);
+
+    memset(_displayArray, 0, sizeof _displayArray);
 }
 
+
+/*
+    Draws the current display state based on [_displayArray]
+*/
 void Display::draw()
 {
     SDL_FRect r;
-    r.x = 50;
-    r.y = 50;
-    r.w = 50;
-    r.h = 50;
+    r.w = 1 * DISPLAY_SCALE_FACTOR;
+    r.h = 1 * DISPLAY_SCALE_FACTOR;
 
-    SDL_SetRenderDrawColor(_displayRenderer, 0, 0, 255, 255);
+    SDL_SetRenderDrawColor(_displayRendererRefrence, 0, 0, 0, 255); // Clears screen to black
+    SDL_RenderClear(_displayRendererRefrence);
 
-    SDL_RenderFillRect(_displayRenderer, &r);
+    SDL_SetRenderDrawColor(_displayRendererRefrence, 255, 255, 255, 255);
 
-    SDL_RenderPresent(_displayRenderer);
+    for (int height = 0; height < DEFAULT_HEIGHT; height++)
+    {
+        for (int width = 0; width < DEFAULT_WIDTH; width++)
+        {
+            r.y = height * DISPLAY_SCALE_FACTOR;
+            r.x = width * DISPLAY_SCALE_FACTOR;
+
+            if (_displayArray[height][width])
+            {
+                SDL_RenderFillRect(_displayRendererRefrence, &r);
+            }
+        }
+    }
+
+    SDL_RenderPresent(_displayRendererRefrence);
+}
+
+/*
+    Reads n bytes from memorry and draws a sprite to position (x,y)
+*/
+void Display::drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numberOfBytes)
+{
+    uint8_t sprite[15] = { 0 };
+
+    for (int i = 0; i < numberOfBytes; i++)
+    {
+        sprite[i] = _mmuRefrence->readMemorryAddress(address + i);
+    }
+
+    for (int byteNum = 0; byteNum < numberOfBytes; byteNum++)
+    {
+        for (int bitNum = 0; bitNum < 8; bitNum++)
+        {
+            uint8_t currentPixle = (sprite[byteNum] << bitNum) & 0x1;
+            bool currentPixleState = _displayArray[(y + byteNum) % DEFAULT_HEIGHT][(x + bitNum) % DEFAULT_WIDTH];
+            currentPixleState ^= currentPixleState;
+        }
+    }
+
+    draw();
 }

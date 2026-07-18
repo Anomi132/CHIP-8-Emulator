@@ -25,6 +25,29 @@ enum registers
 	VF,
 };
 
+union opcode
+{
+	uint16_t raw;
+	struct
+	{
+		uint16_t opcodeID : 4;
+		uint16_t jump : 12;
+	} jump;
+	struct
+	{
+		uint16_t opcodeID : 4;
+		uint16_t registerNumber : 4;
+		uint16_t number : 8;
+	} cmp;
+	struct
+	{
+		uint16_t opcodeID : 4;
+		uint16_t sectionOne : 4;
+		uint16_t sectionTwo : 4;
+		uint16_t sectionThree : 4;
+	} nibles;
+};
+
 /*
 	Representation of the CHIP-8 CPU. 
 	Functions to decode and execute opcodes
@@ -45,14 +68,14 @@ private:
 
 	std::stack<uint16_t> _stack;
 
-	MMU _mmuRefrence;
+	MMU* _mmuRefrence = nullptr;
 
 private:
-	uint16_t getNextInstruction();
-	void executeOptCode(const uint16_t opcode);
+	opcode getNextInstruction();
+	void executeOptCode(const opcode opcode);
 
 public:
-	CPU(MMU mmu) : _mmuRefrence(mmu) {}
+	CPU(MMU* mmu) : _mmuRefrence(mmu) {}
 	CPU() {}
 
 	void runClockCycle();

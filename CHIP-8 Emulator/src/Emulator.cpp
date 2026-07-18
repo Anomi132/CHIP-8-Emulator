@@ -8,8 +8,10 @@
 Emulator::Emulator(SDL_Renderer** renderer)
 {
 	_emulatorMMU = MMU();
-	_emulatorCPU = CPU(_emulatorMMU);
-	_emulatorDisplay = Display(renderer);
+	_emulatorCPU = CPU(&_emulatorMMU);
+	_emulatorDisplay = Display(renderer, &_emulatorMMU);
+
+	_emulatorDisplay.draw(); // DEBUG
 }
 
 /*
