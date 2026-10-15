@@ -28,6 +28,7 @@ void Display::draw()
     r.w = 1 * DISPLAY_SCALE_FACTOR;
     r.h = 1 * DISPLAY_SCALE_FACTOR;
 
+
     SDL_SetRenderDrawColor(_displayRendererRefrence, 0, 0, 0, 255); // Clears screen to black
     SDL_RenderClear(_displayRendererRefrence);
 
