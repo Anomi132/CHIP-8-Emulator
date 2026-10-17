@@ -1,6 +1,8 @@
 #pragma once
 #include <iostream>
 
+#include <SDL3/SDL_audio.h>
+
 #include "CPU.hpp"
 #include "MMU.hpp"
 #include "display.hpp"
@@ -16,11 +18,21 @@ class Emulator
 {
 private:
 	double _accumulator = 0.0;
-	double TIME_PER_CYCLE = 1.0 / 400; // For 400Hz
+	double _timerAccumulator = 0.0;
+
+	double TIME_PER_CYCLE = 1.0 / 400.0; // For 400Hz
+	double TIME_FOR_TIMER = 1.0 / 60.0; // 60Hz
 
 	CPU _emulatorCPU;
 	MMU _emulatorMMU;
 	Display _emulatorDisplay;
+
+	SDL_AudioStream* _audioStream = nullptr;
+	int _waveCounter = 0;
+
+private:
+
+	void playSound();
 
 public:
 

@@ -32,6 +32,33 @@ uint16_t CPU::getNextInstruction()
 }
 
 /*
+	TIMERS
+*/
+void CPU::decrementDelayTimer()
+{
+	if (state.delayTimer <= 0) { return; }
+
+	state.delayTimer -= 1;
+}
+
+void CPU::decrementSoundTimer()
+{
+	if (state.soundTimer <= 0) { return; }
+
+	state.soundTimer -= 1;
+}
+
+uint8_t CPU::getDelayTimer()
+{
+	return state.delayTimer;
+}
+
+uint8_t CPU::getSoundTimer()
+{
+	return state.soundTimer;
+}
+
+/*
 	Runs a single CPU Cycle
 */
 void CPU::runClockCycle()

@@ -447,7 +447,7 @@ void opcode_Dxyn_DISPLAY(CPU_State& state, const uint16_t opcode)
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
 	uint8_t numOfBytes = opcode & 0x000F;
 
-	state.displayRefrence->drawSprite(
+	state.registers[VF] = state.displayRefrence->drawSprite(
 		state.registers[registerA],
 		state.registers[registerB],
 		state.registers[state.addressRegisterI],

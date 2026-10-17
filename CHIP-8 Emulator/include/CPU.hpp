@@ -62,4 +62,10 @@ public:
 	CPU() {}
 
 	void runClockCycle();
+
+	void decrementDelayTimer();
+	void decrementSoundTimer();
+
+	uint8_t getDelayTimer();
+	uint8_t getSoundTimer();
 };
