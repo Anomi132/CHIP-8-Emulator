@@ -1,4 +1,6 @@
 #include <functional>
+#include <string>
+#include <map>
 
 #include "cpu.hpp"
 
@@ -7,50 +9,52 @@
 	The reason is normal funciton declaration would mix the opcodes around, now they are in hex order
 */
 
-void opcode_0nnn_JUMP(CPU_State& state, const uint16_t op);
-void opcode_00E0_CLS(CPU_State& state, const uint16_t op);
-void opcode_00EE_RET(CPU_State& state, const uint16_t op);
-void opcode_1nnn_CLS(CPU_State& state, const uint16_t op);
-void opcode_2nnn_CALL(CPU_State& state, const uint16_t op);
-void opcode_3xkk_SKIP(CPU_State& state, const uint16_t op);
-void opcode_4xkk_SKIP(CPU_State& state, const uint16_t op);
-void opcode_5xy0_SKIP(CPU_State& state, const uint16_t op);
-void opcode_6xkk_SET(CPU_State& state, const uint16_t op);
-void opcode_7xkk_ADD(CPU_State& state, const uint16_t op);
-void opcode_8xy0_SET(CPU_State& state, const uint16_t op);
-void opcode_8xy1_SET(CPU_State& state, const uint16_t op);
-void opcode_8xy2_SET(CPU_State& state, const uint16_t op);
-void opcode_8xy3_SET(CPU_State& state, const uint16_t op);
-void opcode_8xy4_SET(CPU_State& state, const uint16_t op);
-void opcode_8xy5_SET(CPU_State& state, const uint16_t op);
-void opcode_8xy6_SET(CPU_State& state, const uint16_t op);
-void opcode_8xy7_SET(CPU_State& state, const uint16_t op);
-void opcode_8xyE_SET(CPU_State& state, const uint16_t op);
-void opcode_9xy0_SKIP(CPU_State& state, const uint16_t op);
-void opcode_Annn_JUMP(CPU_State& state, const uint16_t op);
-void opcode_Bnnn_JUMP(CPU_State& state, const uint16_t op);
-void opcode_Cxkk_SET(CPU_State& state, const uint16_t op);
-void opcode_Dxyn_DISPLAY(CPU_State& state, const uint16_t op);
-void opcode_Ex9E_KEY(CPU_State& state, const uint16_t op);
-void opcode_ExA1_KEY(CPU_State& state, const uint16_t op);
-void opcode_Fx07_DELAY(CPU_State& state, const uint16_t op);
-void opcode_Fx0A_KEY(CPU_State& state, const uint16_t op);
-void opcode_Fx15_DELAY(CPU_State& state, const uint16_t op);
-void opcode_Fx18_SOUND(CPU_State& state, const uint16_t op);
-void opcode_Fx1E_ADD(CPU_State& state, const uint16_t op);
-void opcode_Fx29_SET(CPU_State& state, const uint16_t op);
-void opcode_Fx33_STORE(CPU_State& state, const uint16_t op);
-void opcode_Fx55_STORE(CPU_State& state, const uint16_t op);
-void opcode_Fx65_READ(CPU_State& state, const uint16_t op);
+void opcode_0nnn_JUMP(CPU_State& state, const uint16_t opcode);
+void opcode_00E0_CLS(CPU_State& state, const uint16_t opcode);
+void opcode_00EE_RET(CPU_State& state, const uint16_t opcode);
+void opcode_1nnn_CLS(CPU_State& state, const uint16_t opcode);
+void opcode_2nnn_CALL(CPU_State& state, const uint16_t opcode);
+void opcode_3xkk_SKIP(CPU_State& state, const uint16_t opcode);
+void opcode_4xkk_SKIP(CPU_State& state, const uint16_t opcode);
+void opcode_5xy0_SKIP(CPU_State& state, const uint16_t opcode);
+void opcode_6xkk_SET(CPU_State& state, const uint16_t opcode);
+void opcode_7xkk_ADD(CPU_State& state, const uint16_t opcode);
+void opcode_8xy0_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xy1_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xy2_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xy3_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xy4_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xy5_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xy6_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xy7_SET(CPU_State& state, const uint16_t opcode);
+void opcode_8xyE_SET(CPU_State& state, const uint16_t opcode);
+void opcode_9xy0_SKIP(CPU_State& state, const uint16_t opcode);
+void opcode_Annn_JUMP(CPU_State& state, const uint16_t opcode);
+void opcode_Bnnn_JUMP(CPU_State& state, const uint16_t opcode);
+void opcode_Cxkk_SET(CPU_State& state, const uint16_t opcode);
+void opcode_Dxyn_DISPLAY(CPU_State& state, const uint16_t opcode);
+void opcode_Ex9E_KEY(CPU_State& state, const uint16_t opcode);
+void opcode_ExA1_KEY(CPU_State& state, const uint16_t opcode);
+void opcode_Fx07_DELAY(CPU_State& state, const uint16_t opcode);
+void opcode_Fx0A_KEY(CPU_State& state, const uint16_t opcode);
+void opcode_Fx15_DELAY(CPU_State& state, const uint16_t opcode);
+void opcode_Fx18_SOUND(CPU_State& state, const uint16_t opcode);
+void opcode_Fx1E_ADD(CPU_State& state, const uint16_t opcode);
+void opcode_Fx29_SET(CPU_State& state, const uint16_t opcode);
+void opcode_Fx33_STORE(CPU_State& state, const uint16_t opcode);
+void opcode_Fx55_STORE(CPU_State& state, const uint16_t opcode);
+void opcode_Fx65_READ(CPU_State& state, const uint16_t opcode);
+
+void unknownOpcode(CPU_State& state, const uint16_t opcode);
 
 /*
 	DISPATCHER FUNCTION FOR SUB TABLES
 */
 
-void dispatcher_0(CPU_State & state, const uint16_t op);
-void dispatcher_8(CPU_State& state, const uint16_t op);
-void dispatcher_E(CPU_State& state, const uint16_t op);
-void dispatcher_F(CPU_State& state, const uint16_t op);
+void dispatcher_0(CPU_State & state, const uint16_t opcode);
+void dispatcher_8(CPU_State& state, const uint16_t opcode);
+void dispatcher_E(CPU_State& state, const uint16_t opcode);
+void dispatcher_F(CPU_State& state, const uint16_t opcode);
 
 /*
 	FUNCTION JUMP TABLES
@@ -75,44 +79,294 @@ std::function<void(CPU_State&, const uint16_t)> primaryTable[16] = {
    dispatcher_F
 };
 
-std::function<void(CPU_State&, const uint16_t)> table_0[3] = {
-   opcode_0nnn_JUMP,
-   opcode_00E0_CLS,
-   opcode_00EE_RET
-};
-
-std::function<void(CPU_State&, const uint16_t)> table_8[9] = {
-	opcode_8xy0_SET,
-	opcode_8xy1_SET,
-	opcode_8xy2_SET,
-	opcode_8xy3_SET,
+std::function<void(CPU_State&, const uint16_t)> table_8[16] = {
+	opcode_8xy0_SET, 
+	opcode_8xy1_SET, 
+	opcode_8xy2_SET, 
+	opcode_8xy3_SET, 
 	opcode_8xy4_SET,
-	opcode_8xy5_SET,
-	opcode_8xy6_SET,
-	opcode_8xy7_SET,
-	opcode_8xyE_SET
+	opcode_8xy5_SET, 
+	opcode_8xy6_SET, 
+	opcode_8xy7_SET, 
+	unknownOpcode,
+	unknownOpcode,
+	unknownOpcode,
+	unknownOpcode,
+	unknownOpcode,
+	unknownOpcode,
+	opcode_8xyE_SET, 
+	unknownOpcode
 };
 
-std::function<void(CPU_State&, const uint16_t)> table_E[2] = {
-	opcode_Ex9E_KEY,
-	opcode_ExA1_KEY
-};
-
-std::function<void(CPU_State&, const uint16_t)> table_F[9] = {
-	opcode_Fx07_DELAY,
-	opcode_Fx0A_KEY,
-	opcode_Fx15_DELAY,
-	opcode_Fx18_SOUND,
-	opcode_Fx1E_ADD,
-	opcode_Fx29_SET,
-	opcode_Fx33_STORE,
-	opcode_Fx55_STORE,
-	opcode_Fx65_READ
+std::map<uint8_t, std::function<void(CPU_State&, const uint16_t)>> table_F = {
+	{0x07, opcode_Fx07_DELAY},
+	{0x0A, opcode_Fx0A_KEY},
+	{0x15, opcode_Fx15_DELAY},
+	{0x18, opcode_Fx18_SOUND},
+	{0x1E, opcode_Fx1E_ADD},
+	{0x29, opcode_Fx29_SET},
+	{0x33, opcode_Fx33_STORE},
+	{0x55, opcode_Fx55_STORE},
+	{0x65, opcode_Fx65_READ}
 };
 
 /*
-	FUNCTION DEFINITIONS
+	HELPER FUNCTIONS
 */
+
+void unknownOpcode(CPU_State& state, const uint16_t opcode)
+{
+	throw "Unknown opcode " + std::to_string(opcode);
+}
+
+/*
+	DISPATCHER DEFINITIONS
+*/
+
+void dispatcher_0(CPU_State& state, const uint16_t opcode)
+{
+	uint8_t lastTwoNibbles = opcode & 0x00FF;
+
+	if (lastTwoNibbles == 0xE0)
+	{
+		opcode_00E0_CLS(state, opcode);
+	}
+	else if (lastTwoNibbles == 0xEE)
+	{
+		opcode_00EE_RET(state, opcode);
+	}
+	else
+	{
+		opcode_0nnn_JUMP(state, opcode);
+	}
+}
+
+void dispatcher_8(CPU_State& state, const uint16_t opcode)
+{
+	uint8_t lastNibble = opcode & 0x000F;
+
+	if (lastNibble > 0xE)
+	{
+		throw "Unknown opcode " + std::to_string(opcode);
+	}
+
+	std::function<void(CPU_State&, const uint16_t)> opcodeFunction = table_8[lastNibble];
+	opcodeFunction(state, opcode);
+}
+
+void dispatcher_E(CPU_State& state, const uint16_t opcode)
+{
+	uint8_t lastTwoNibbles = opcode & 0x00FF;
+
+	if (lastTwoNibbles == 0x9E)
+	{
+		opcode_Ex9E_KEY(state, opcode);
+	}
+	else if (lastTwoNibbles == 0xA1)
+	{
+		opcode_ExA1_KEY(state, opcode);
+	}
+	else
+	{
+		throw "Unknown opcode " + std::to_string(opcode);
+	}
+}
+
+void dispatcher_F(CPU_State& state, const uint16_t opcode)
+{
+	uint8_t lastTwoNibbles = opcode & 0x00FF;
+
+	auto it = table_F.find(lastTwoNibbles);
+	if (it != table_F.end())
+	{
+		it->second(state, opcode);
+	}
+	else
+	{
+		unknownOpcode(state, opcode);
+	}
+}
+
+
+/*
+	OPTCODE DEFINITIONS
+*/
+
+void opcode_0nnn_JUMP(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_00E0_CLS(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_00EE_RET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_1nnn_CLS(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_2nnn_CALL(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_3xkk_SKIP(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_4xkk_SKIP(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_5xy0_SKIP(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_6xkk_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_7xkk_ADD(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy0_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy1_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy2_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy3_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy4_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy5_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy6_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xy7_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_8xyE_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_9xy0_SKIP(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Annn_JUMP(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Bnnn_JUMP(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Cxkk_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Dxyn_DISPLAY(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Ex9E_KEY(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_ExA1_KEY(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx07_DELAY(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx0A_KEY(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx15_DELAY(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx18_SOUND(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx1E_ADD(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx29_SET(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx33_STORE(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx55_STORE(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
+void opcode_Fx65_READ(CPU_State& state, const uint16_t opcode)
+{
+
+}
+
 
 /*
 	Calls the coresponding opcode function
