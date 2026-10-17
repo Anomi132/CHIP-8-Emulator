@@ -27,6 +27,8 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
     }
     SDL_SetRenderLogicalPresentation(renderer, 64 * DISPLAY_SCALE_FACTOR, 32 * DISPLAY_SCALE_FACTOR, SDL_LOGICAL_PRESENTATION_LETTERBOX);
 
+    srand(time(nullptr));
+
     return SDL_APP_CONTINUE;  
 }
 
