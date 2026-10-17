@@ -2,6 +2,7 @@
 #include <iostream>
 
 #include <SDL3/SDL_audio.h>
+#include <SDL3/SDL_scancode.h>
 
 #include "CPU.hpp"
 #include "MMU.hpp"
@@ -30,13 +31,18 @@ private:
 	SDL_AudioStream* _audioStream = nullptr;
 	int _waveCounter = 0;
 
+	bool keyboard[16];
+
 private:
 
 	void playSound();
+	void updateKeyboard();
 
 public:
 
 	Emulator(SDL_Renderer** renderer);
+	~Emulator();
 
 	void update(double deltaTime);
+	bool getKeyStateById(uint8_t index);
 };
