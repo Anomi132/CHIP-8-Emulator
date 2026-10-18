@@ -11,7 +11,7 @@ Emulator::Emulator(SDL_Renderer** renderer)
 {
 	_emulatorMMU = MMU();
 	_emulatorDisplay = Display(renderer, &_emulatorMMU);
-	_emulatorCPU = CPU(&_emulatorMMU, &_emulatorDisplay);
+	_emulatorCPU = CPU(&_emulatorMMU, &_emulatorDisplay, this);
 
 	SDL_AudioSpec spec;
 	spec.format = SDL_AUDIO_F32;
@@ -107,7 +107,7 @@ void Emulator::updateKeyboard()
 
 	for (int i = 0; i < 16; ++i)
 	{
-		keyboard[i] = key_states[key_map[i]] ? 1 : 0;
+		_keyboard[i] = key_states[key_map[i]] ? 1 : 0;
 	}
 }
 
@@ -121,5 +121,22 @@ bool Emulator::getKeyStateById(uint8_t index)
 		throw "This key does not exist index: " + std::to_string(index);
 	}
 
-	return keyboard[index];
+	return _keyboard[index];
+}
+
+/*
+	Returns the index (0x0 to 0xF) of the first pressed key found.
+	Returns -1 if no key is currently pressed.
+*/
+int Emulator::getPressedKey()
+{
+	for (int i = 0; i < 16; ++i)
+	{
+		if (_keyboard[i]) 
+		{
+			return i; 
+		}
+	}
+
+	return -1; 
 }

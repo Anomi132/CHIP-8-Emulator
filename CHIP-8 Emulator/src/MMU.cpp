@@ -3,6 +3,11 @@
 #include <array>
 #include <string>
 
+MMU::MMU()
+{
+	std::copy(CHIP8_FONTSET, CHIP8_FONTSET + 80, _memoryMap);
+}
+
 /*
 	Read memorry location at [address]
 */

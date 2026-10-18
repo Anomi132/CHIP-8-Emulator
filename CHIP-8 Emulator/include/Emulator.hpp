@@ -31,7 +31,7 @@ private:
 	SDL_AudioStream* _audioStream = nullptr;
 	int _waveCounter = 0;
 
-	bool keyboard[16];
+	bool _keyboard[16] = { 0 };
 
 private:
 
@@ -45,4 +45,6 @@ public:
 
 	void update(double deltaTime);
 	bool getKeyStateById(uint8_t index);
+	int getPressedKey();
+
 };

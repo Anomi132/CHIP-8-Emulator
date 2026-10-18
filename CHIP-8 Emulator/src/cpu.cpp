@@ -6,10 +6,11 @@
 #include "cpu.hpp"
 #include "MMU.hpp"
 
-CPU::CPU(MMU* mmu, Display* display)
+CPU::CPU(MMU* mmu, Display* display, Emulator* emulator)
 {
 	state.mmuRefrence = mmu;
 	state.displayRefrence = display;
+	state.emulatorRefrence = emulator;
 }
 
 /*

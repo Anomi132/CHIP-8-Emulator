@@ -5,6 +5,7 @@
 
 #include "MMU.hpp"
 #include "display.hpp"
+#include "emulator.hpp"
 
 enum registers
 {
@@ -47,6 +48,8 @@ struct CPU_State
 
 	MMU* mmuRefrence = nullptr;
 	Display* displayRefrence = nullptr;
+
+	Emulator* emulatorRefrence = nullptr;
 };
 
 class CPU
@@ -58,7 +61,7 @@ private:
 	void executeOptCode(const uint16_t opcode);
 
 public:
-	CPU(MMU* mmu, Display* display);
+	CPU(MMU* mmu, Display* display, Emulator* emulator);
 	CPU() {}
 
 	void runClockCycle();
