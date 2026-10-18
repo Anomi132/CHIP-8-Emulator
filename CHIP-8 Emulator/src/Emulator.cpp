@@ -9,10 +9,10 @@
 #include "display.hpp"
 
 Emulator::Emulator(SDL_Renderer** renderer)
+	: _emulatorMMU(),
+	_emulatorDisplay(renderer, &_emulatorMMU),
+	_emulatorCPU(&_emulatorMMU, &_emulatorDisplay, this)
 {
-	_emulatorMMU = MMU();
-	_emulatorDisplay = Display(renderer, &_emulatorMMU);
-	_emulatorCPU = CPU(&_emulatorMMU, &_emulatorDisplay, this);
 
 	SDL_AudioSpec spec;
 	spec.format = SDL_AUDIO_F32;
@@ -25,9 +25,11 @@ Emulator::Emulator(SDL_Renderer** renderer)
 		NULL,
 		NULL
 	);
-	SDL_ResumeAudioStreamDevice(_audioStream);
+	SDL_ResumeAudioStreamDevice(_audioStream);	
 
 	// TEMPORRAY ROM LOADING
+	std::string location = "./roms/8-scrolling.ch8";
+	this->loadROM(location);
 }
 
 Emulator::~Emulator()
@@ -40,6 +42,8 @@ Emulator::~Emulator()
 */
 void Emulator::update(double deltaTime)
 {
+	updateKeyboard();
+
 	_accumulator += deltaTime;
 	while (_accumulator >= TIME_PER_CYCLE)
 	{
@@ -50,12 +54,12 @@ void Emulator::update(double deltaTime)
 	_timerAccumulator += deltaTime;
 	while (_timerAccumulator >= TIME_FOR_TIMER)
 	{
-		if (_emulatorCPU.getDelayTimer() >= 0)
+		if (_emulatorCPU.getDelayTimer() > 0)
 		{
 			_emulatorCPU.decrementDelayTimer();
 		}
 
-		if (_emulatorCPU.getSoundTimer() >= 0)
+		if (_emulatorCPU.getSoundTimer() > 0)
 		{
 			playSound();
 			_emulatorCPU.decrementSoundTimer();
@@ -78,7 +82,7 @@ void Emulator::playSound()
 		for (int i = 0; i < 735; ++i)
 		{
 			// 440 Hz square wave: 50 high, 50 low
-			buffer[i] = (_waveCounter < 50) ? 0.2f : -0.2f;
+			buffer[i] = (_waveCounter < 50) ? 0.01f : -0.01f;
 
 			_waveCounter++;
 			if (_waveCounter >= 100) {
@@ -92,6 +96,8 @@ void Emulator::playSound()
 			buffer[i] = 0.0f;
 		}
 	}
+
+	SDL_PutAudioStreamData(_audioStream, buffer, 735 * sizeof(float));
 }
 
 /*
@@ -102,16 +108,16 @@ void Emulator::updateKeyboard()
 	const bool* key_states = SDL_GetKeyboardState(NULL);
 
 	static const SDL_Scancode key_map[16] = {
-		SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, SDL_SCANCODE_4, // 0, 1, 2, 3
-		SDL_SCANCODE_Q, SDL_SCANCODE_W, SDL_SCANCODE_E, SDL_SCANCODE_R, // 4, 5, 6, 7
-		SDL_SCANCODE_A, SDL_SCANCODE_S, SDL_SCANCODE_D, SDL_SCANCODE_F, // 8, 9, A, B
-		SDL_SCANCODE_Z, SDL_SCANCODE_X, SDL_SCANCODE_C, SDL_SCANCODE_V  // C, D, E, F
+		SDL_SCANCODE_X, SDL_SCANCODE_1, SDL_SCANCODE_2, SDL_SCANCODE_3, // 0x0, 0x1, 0x2, 0x3
+		SDL_SCANCODE_Q, SDL_SCANCODE_W, SDL_SCANCODE_E, SDL_SCANCODE_A, // 0x4, 0x5, 0x6, 0x7
+		SDL_SCANCODE_S, SDL_SCANCODE_D, SDL_SCANCODE_Z, SDL_SCANCODE_C, // 0x8, 0x9, 0xA, 0xB
+		SDL_SCANCODE_4, SDL_SCANCODE_R, SDL_SCANCODE_F, SDL_SCANCODE_V  // 0xC, 0xD, 0xE, 0xF
 	};
 
 	for (int i = 0; i < 16; ++i)
 	{
-		_keyboard[i] = key_states[key_map[i]] ? 1 : 0;
-	}
+		keypad[i] = key_states[key_map[i]] ? 1 : 0;
+	}	
 }
 
 /*
@@ -124,7 +130,7 @@ bool Emulator::getKeyStateById(uint8_t index)
 		throw "This key does not exist index: " + std::to_string(index);
 	}
 
-	return _keyboard[index];
+	return keypad[index];
 }
 
 /*
@@ -135,7 +141,7 @@ int Emulator::getPressedKey()
 {
 	for (int i = 0; i < 16; ++i)
 	{
-		if (_keyboard[i]) 
+		if (keypad[i]) 
 		{
 			return i; 
 		}

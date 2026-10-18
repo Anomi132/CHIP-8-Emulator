@@ -4,10 +4,11 @@
 #include <string>
 #include <fstream>
 #include <algorithm>
+#include <iostream>
 
 MMU::MMU()
 {
-	std::copy(CHIP8_FONTSET, CHIP8_FONTSET + 80, _memoryMap);
+	std::copy(CHIP8_FONTSET, CHIP8_FONTSET + 80, _memoryMap.begin());
 }
 
 /*
@@ -42,7 +43,7 @@ void MMU::writeToMemorryAddress(const uint16_t address, const uint8_t data)
 void MMU::resetMemorry()
 {
 	std::fill(_memoryMap.begin(), _memoryMap.end(), 0);
-	std::copy(CHIP8_FONTSET, CHIP8_FONTSET + 80, _memoryMap);
+	std::copy(CHIP8_FONTSET, CHIP8_FONTSET + 80, _memoryMap.begin());
 }
 
 /*
@@ -60,7 +61,7 @@ void MMU::loadFromFile(std::string& romLocation)
 
 	file.seekg(0, std::ios::beg);
 
-	file.read((char*)_memoryMap[0x200], size);
+	file.read((char*)&_memoryMap[0x200], size);
 
 	file.close();
 }

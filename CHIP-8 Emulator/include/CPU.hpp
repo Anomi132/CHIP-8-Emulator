@@ -3,9 +3,9 @@
 #include <array>
 #include <stack>
 
-#include "MMU.hpp"
-#include "display.hpp"
-#include "emulator.hpp"
+class MMU;
+class Display;
+class Emulator;
 
 enum registers
 {
@@ -50,6 +50,8 @@ struct cpuState
 	Display* displayRefrence = nullptr;
 
 	Emulator* emulatorRefrence = nullptr;
+
+	int keyWaitingForRelease = -1;
 };
 
 class CPU

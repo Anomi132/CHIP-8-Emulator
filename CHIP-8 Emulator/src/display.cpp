@@ -66,14 +66,16 @@ bool Display::drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numb
     bool collision = false;
     for (int byteNum = 0; byteNum < numberOfBytes; byteNum++)
     {
-        for (int bitNum = 0; bitNum < 8; bitNum++)
+        for (int bitNum = 8; bitNum > 0; bitNum--)
         {
-            uint8_t currentPixle = (sprite[byteNum] << bitNum) & 0x1;
-            bool currentPixleState = _displayArray[(y + byteNum) % DEFAULT_HEIGHT][(x + bitNum) % DEFAULT_WIDTH];
-            if ((currentPixleState ^ currentPixleState) != currentPixleState)
+            uint8_t currentPixle = (sprite[byteNum] >> (bitNum - 1)) & 0x1;
+            bool currentPixleState = _displayArray[(y + byteNum) % DEFAULT_HEIGHT][(x + (8 - bitNum)) % DEFAULT_WIDTH];
+            if ((currentPixleState ^ currentPixle) != currentPixleState)
             {
                 collision = true;
             }
+
+            _displayArray[(y + byteNum) % DEFAULT_HEIGHT][(x + (8 - bitNum)) % DEFAULT_WIDTH] ^= currentPixle;
         }
     }
 

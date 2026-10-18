@@ -19,7 +19,7 @@ CPU::CPU(MMU* mmu, Display* display, Emulator* emulator)
 */
 uint16_t CPU::getNextInstruction()
 {
-	if (state.programCounter >= 4096) // Max memorry
+	if (state.programCounter >= 4095) // Max memorry
 	{
 		throw "programCounter outside memorry range (0-4095): " + std::to_string(state.programCounter);
 	}

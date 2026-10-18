@@ -4,6 +4,8 @@
 #include <map>
 
 #include "cpu.hpp"
+#include "display.hpp"
+#include "emulator.hpp"
 
 /*
 	OPCODE FUCTION DECLARATIONS
@@ -304,7 +306,7 @@ void opcode_7xkk_ADD(cpuState& state, const uint16_t opcode)
 	uint8_t cpuRegister, addValue;
 	std::tie(cpuRegister, addValue) = extractRegisterAndValue(opcode);
 
-	state.registers[cpuRegister] = addValue;
+	state.registers[cpuRegister] += addValue;
 }
 
 void opcode_8xy0_SET(cpuState& state, const uint16_t opcode)
@@ -321,6 +323,7 @@ void opcode_8xy1_SET(cpuState& state, const uint16_t opcode)
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
 
 	state.registers[registerA] |= state.registers[registerB];
+	state.registers[VF] = 0;
 }
 
 void opcode_8xy2_SET(cpuState& state, const uint16_t opcode)
@@ -328,7 +331,8 @@ void opcode_8xy2_SET(cpuState& state, const uint16_t opcode)
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
 
-	state.registers[registerB] |= state.registers[registerB];
+	state.registers[registerA] &= state.registers[registerB];
+	state.registers[VF] = 0;
 }
 
 void opcode_8xy3_SET(cpuState& state, const uint16_t opcode)
@@ -336,7 +340,8 @@ void opcode_8xy3_SET(cpuState& state, const uint16_t opcode)
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
 
-	state.registers[registerB] ^= state.registers[registerB];
+	state.registers[registerA] ^= state.registers[registerB];
+	state.registers[VF] = 0;
 }
 
 void opcode_8xy4_SET(cpuState& state, const uint16_t opcode)
@@ -344,7 +349,7 @@ void opcode_8xy4_SET(cpuState& state, const uint16_t opcode)
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
 
-	uint16_t registerSum = state.registers[registerB] + state.registers[registerB];
+	uint16_t registerSum = state.registers[registerA] + state.registers[registerB];
 	uint8_t carry = registerSum > 255 ? 1 : 0;
 
 	state.registers[registerA] = registerSum & 0xFF; // Take only overflow bits
@@ -359,7 +364,7 @@ void opcode_8xy5_SET(cpuState& state, const uint16_t opcode)
 	uint16_t registerAValue =  state.registers[registerA];
 	uint16_t registerBValue = state.registers[registerB];
 
-	uint8_t carry = registerAValue > registerBValue ? 1 : 0;
+	uint8_t carry = registerAValue >= registerBValue ? 1 : 0;
 
 	state.registers[registerA] -= registerBValue; 
 	state.registers[VF] = carry;
@@ -370,12 +375,11 @@ void opcode_8xy6_SET(cpuState& state, const uint16_t opcode)
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
 
-	uint16_t registerAValue = state.registers[registerA];
+	uint8_t targetValue = state.registers[registerA]; 
+	uint8_t flag = targetValue & 0x01;
 
-	uint8_t leastBitIs1 = registerAValue & 0x1;
-
-	state.registers[registerA] /= 2;
-	state.registers[VF] = leastBitIs1;
+	state.registers[registerA] = (targetValue >> 1) & 0xFF;
+	state.registers[VF] = flag;
 }
 
 void opcode_8xy7_SET(cpuState& state, const uint16_t opcode)
@@ -386,7 +390,7 @@ void opcode_8xy7_SET(cpuState& state, const uint16_t opcode)
 	uint16_t registerAValue = state.registers[registerA];
 	uint16_t registerBValue = state.registers[registerB];
 
-	uint8_t carry = registerBValue > registerAValue ? 1 : 0;
+	uint8_t carry = registerBValue >= registerAValue ? 1 : 0;
 
 	state.registers[registerA] = registerBValue - registerAValue;
 	state.registers[VF] = carry;
@@ -397,12 +401,12 @@ void opcode_8xyE_SET(cpuState& state, const uint16_t opcode)
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
 
-	uint16_t registerAValue = state.registers[registerA];
+	uint8_t targetValue = state.registers[registerA]; 
 
-	uint8_t leastBitIs1 = registerAValue & 0x1;
+	uint8_t mostBitIs1 = (targetValue >> 7) & 0x1;
 
-	state.registers[registerA] *= 2;
-	state.registers[VF] = leastBitIs1;
+	state.registers[registerA] = (targetValue << 1) & 0xFF;
+	state.registers[VF] = mostBitIs1;
 }
 
 void opcode_9xy0_SKIP(cpuState& state, const uint16_t opcode)
@@ -450,7 +454,7 @@ void opcode_Dxyn_DISPLAY(cpuState& state, const uint16_t opcode)
 	state.registers[VF] = state.displayRefrence->drawSprite(
 		state.registers[registerA],
 		state.registers[registerB],
-		state.registers[state.addressRegisterI],
+		state.addressRegisterI,
 		numOfBytes
 	);
 }
@@ -486,16 +490,30 @@ void opcode_Fx07_DELAY(cpuState& state, const uint16_t opcode)
 void opcode_Fx0A_KEY(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister = (opcode & 0x0F00) >> 8;
-	int keyPressed = state.emulatorRefrence->getPressedKey();
 
-	if (keyPressed != -1)
+	if (state.keyWaitingForRelease == -1)
 	{
-		state.registers[cpuRegister] = keyPressed;
+		int keyPressed = state.emulatorRefrence->getPressedKey();
+
+		if (keyPressed != -1)
+		{
+			state.keyWaitingForRelease = keyPressed;
+		}
+		else
+		{
+			state.programCounter -= 2;
+			return;
+		}
 	}
-	else
+
+	if (state.emulatorRefrence->getKeyStateById(state.keyWaitingForRelease))
 	{
 		state.programCounter -= 2;
+		return;
 	}
+
+	state.registers[cpuRegister] = state.keyWaitingForRelease;
+	state.keyWaitingForRelease = -1;
 }
 
 void opcode_Fx15_DELAY(cpuState& state, const uint16_t opcode)
@@ -548,32 +566,36 @@ void opcode_Fx33_STORE(cpuState& state, const uint16_t opcode)
 
 	state.mmuRefrence->writeToMemorryAddress(adress, hundred);
 	state.mmuRefrence->writeToMemorryAddress(adress + 1, ten);
-	state.mmuRefrence->writeToMemorryAddress(adress + 1, one);
+	state.mmuRefrence->writeToMemorryAddress(adress + 2, one);
 }
 
 void opcode_Fx55_STORE(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerLimit = (opcode & 0x0F00) >> 8;
-	uint8_t registerX = state.registers[registerLimit];
 
 	uint16_t adress = state.addressRegisterI;
-	for (int i = 0; i < registerX; i++)
+	for (int i = 0; i <= registerLimit; i++)
 	{
 		uint8_t registerValue = state.registers[i];
-		state.mmuRefrence->writeToMemorryAddress(adress + i, registerValue);
+		state.mmuRefrence->writeToMemorryAddress(adress, registerValue);
+		adress += 1;
 	}
+
+	state.addressRegisterI = adress;
 }
 
 void opcode_Fx65_READ(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerLimit = (opcode & 0x0F00) >> 8;
-	uint8_t registerX = state.registers[registerLimit];
 
 	uint16_t adress = state.addressRegisterI;
-	for (int i = 0; i < registerX; i++)
+	for (int i = 0; i <= registerLimit; i++)
 	{
-		state.registers[i] = state.mmuRefrence->readMemorryAddress(adress + i);
+		state.registers[i] = state.mmuRefrence->readMemorryAddress(adress);
+		adress += 1;
 	}
+
+	state.addressRegisterI = adress;
 }
 
 
@@ -583,7 +605,7 @@ void opcode_Fx65_READ(cpuState& state, const uint16_t opcode)
 */
 void CPU::executeOptCode(const uint16_t opcode)
 {
-	uint8_t firstNibble = opcode & 0xF000 >> 12;
+	uint8_t firstNibble = (opcode & 0xF000) >> 12;
 
 	std::function<void(cpuState&, const uint16_t)> opcodeFunction = primaryTable[firstNibble];
 	opcodeFunction(state, opcode);
