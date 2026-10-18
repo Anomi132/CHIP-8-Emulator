@@ -18,3 +18,10 @@ add_custom_command(TARGET chip8 POST_BUILD
         $<TARGET_FILE_DIR:chip8>
     COMMENT "Copying SDL3.dll to output directory"
 )
+
+add_custom_command(TARGET chip8 POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        "${CMAKE_SOURCE_DIR}/roms"
+        "$<TARGET_FILE_DIR:chip8>/roms"
+    COMMENT "Copying test ROMs to the output directory..."
+)

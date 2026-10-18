@@ -17,6 +17,9 @@ public:
 
 	uint8_t readMemorryAddress(const uint16_t address);
 	void writeToMemorryAddress(const uint16_t address, const uint8_t data);
+
+    void resetMemorry();
+    void loadFromFile(std::string& romLocation);
 };
 
 const uint8_t CHIP8_FONTSET[80] = {

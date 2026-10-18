@@ -47,4 +47,5 @@ public:
 	bool getKeyStateById(uint8_t index);
 	int getPressedKey();
 
+	void loadROM(std::string& romLocation);
 };

@@ -1,6 +1,7 @@
 #include <SDL3/SDL.h>
 
 #include <string>
+#include <fstream>
 
 #include "Emulator.hpp"
 #include "CPU.hpp"
@@ -25,6 +26,8 @@ Emulator::Emulator(SDL_Renderer** renderer)
 		NULL
 	);
 	SDL_ResumeAudioStreamDevice(_audioStream);
+
+	// TEMPORRAY ROM LOADING
 }
 
 Emulator::~Emulator()
@@ -40,7 +43,7 @@ void Emulator::update(double deltaTime)
 	_accumulator += deltaTime;
 	while (_accumulator >= TIME_PER_CYCLE)
 	{
-		//emulatorCPU.runClockCycle();
+		_emulatorCPU.runClockCycle();
 		_accumulator -= TIME_PER_CYCLE;
 	}
 
@@ -139,4 +142,16 @@ int Emulator::getPressedKey()
 	}
 
 	return -1; 
+}
+
+/*
+	Resets states and loads the ROM at [romLocation]
+*/
+void Emulator::loadROM(std::string& romLocation)
+{
+	_emulatorCPU.resetState();
+	_emulatorMMU.resetMemorry();
+	_emulatorDisplay.clearScreen();
+
+	_emulatorMMU.loadFromFile(romLocation);
 }

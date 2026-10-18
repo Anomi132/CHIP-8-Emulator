@@ -10,58 +10,58 @@
 	The reason is normal funciton declaration would mix the opcodes around, now they are in hex order
 */
 
-void opcode_0nnn_JUMP(CPU_State& state, const uint16_t opcode);
-void opcode_00E0_CLS(CPU_State& state, const uint16_t opcode);
-void opcode_00EE_RET(CPU_State& state, const uint16_t opcode);
-void opcode_1nnn_JUMP(CPU_State& state, const uint16_t opcode);
-void opcode_2nnn_CALL(CPU_State& state, const uint16_t opcode);
-void opcode_3xkk_SKIP(CPU_State& state, const uint16_t opcode);
-void opcode_4xkk_SKIP(CPU_State& state, const uint16_t opcode);
-void opcode_5xy0_SKIP(CPU_State& state, const uint16_t opcode);
-void opcode_6xkk_SET(CPU_State& state, const uint16_t opcode);
-void opcode_7xkk_ADD(CPU_State& state, const uint16_t opcode);
-void opcode_8xy0_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xy1_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xy2_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xy3_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xy4_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xy5_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xy6_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xy7_SET(CPU_State& state, const uint16_t opcode);
-void opcode_8xyE_SET(CPU_State& state, const uint16_t opcode);
-void opcode_9xy0_SKIP(CPU_State& state, const uint16_t opcode);
-void opcode_Annn_JUMP(CPU_State& state, const uint16_t opcode);
-void opcode_Bnnn_JUMP(CPU_State& state, const uint16_t opcode);
-void opcode_Cxkk_SET(CPU_State& state, const uint16_t opcode);
-void opcode_Dxyn_DISPLAY(CPU_State& state, const uint16_t opcode);
-void opcode_Ex9E_KEY(CPU_State& state, const uint16_t opcode);
-void opcode_ExA1_KEY(CPU_State& state, const uint16_t opcode);
-void opcode_Fx07_DELAY(CPU_State& state, const uint16_t opcode);
-void opcode_Fx0A_KEY(CPU_State& state, const uint16_t opcode);
-void opcode_Fx15_DELAY(CPU_State& state, const uint16_t opcode);
-void opcode_Fx18_SOUND(CPU_State& state, const uint16_t opcode);
-void opcode_Fx1E_ADD(CPU_State& state, const uint16_t opcode);
-void opcode_Fx29_SET(CPU_State& state, const uint16_t opcode);
-void opcode_Fx33_STORE(CPU_State& state, const uint16_t opcode);
-void opcode_Fx55_STORE(CPU_State& state, const uint16_t opcode);
-void opcode_Fx65_READ(CPU_State& state, const uint16_t opcode);
+void opcode_0nnn_JUMP(cpuState& state, const uint16_t opcode);
+void opcode_00E0_CLS(cpuState& state, const uint16_t opcode);
+void opcode_00EE_RET(cpuState& state, const uint16_t opcode);
+void opcode_1nnn_JUMP(cpuState& state, const uint16_t opcode);
+void opcode_2nnn_CALL(cpuState& state, const uint16_t opcode);
+void opcode_3xkk_SKIP(cpuState& state, const uint16_t opcode);
+void opcode_4xkk_SKIP(cpuState& state, const uint16_t opcode);
+void opcode_5xy0_SKIP(cpuState& state, const uint16_t opcode);
+void opcode_6xkk_SET(cpuState& state, const uint16_t opcode);
+void opcode_7xkk_ADD(cpuState& state, const uint16_t opcode);
+void opcode_8xy0_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xy1_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xy2_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xy3_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xy4_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xy5_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xy6_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xy7_SET(cpuState& state, const uint16_t opcode);
+void opcode_8xyE_SET(cpuState& state, const uint16_t opcode);
+void opcode_9xy0_SKIP(cpuState& state, const uint16_t opcode);
+void opcode_Annn_JUMP(cpuState& state, const uint16_t opcode);
+void opcode_Bnnn_JUMP(cpuState& state, const uint16_t opcode);
+void opcode_Cxkk_SET(cpuState& state, const uint16_t opcode);
+void opcode_Dxyn_DISPLAY(cpuState& state, const uint16_t opcode);
+void opcode_Ex9E_KEY(cpuState& state, const uint16_t opcode);
+void opcode_ExA1_KEY(cpuState& state, const uint16_t opcode);
+void opcode_Fx07_DELAY(cpuState& state, const uint16_t opcode);
+void opcode_Fx0A_KEY(cpuState& state, const uint16_t opcode);
+void opcode_Fx15_DELAY(cpuState& state, const uint16_t opcode);
+void opcode_Fx18_SOUND(cpuState& state, const uint16_t opcode);
+void opcode_Fx1E_ADD(cpuState& state, const uint16_t opcode);
+void opcode_Fx29_SET(cpuState& state, const uint16_t opcode);
+void opcode_Fx33_STORE(cpuState& state, const uint16_t opcode);
+void opcode_Fx55_STORE(cpuState& state, const uint16_t opcode);
+void opcode_Fx65_READ(cpuState& state, const uint16_t opcode);
 
-void unknownOpcode(CPU_State& state, const uint16_t opcode);
+void unknownOpcode(cpuState& state, const uint16_t opcode);
 
 /*
 	DISPATCHER FUNCTION FOR SUB TABLES
 */
 
-void dispatcher_0(CPU_State & state, const uint16_t opcode);
-void dispatcher_8(CPU_State& state, const uint16_t opcode);
-void dispatcher_E(CPU_State& state, const uint16_t opcode);
-void dispatcher_F(CPU_State& state, const uint16_t opcode);
+void dispatcher_0(cpuState & state, const uint16_t opcode);
+void dispatcher_8(cpuState& state, const uint16_t opcode);
+void dispatcher_E(cpuState& state, const uint16_t opcode);
+void dispatcher_F(cpuState& state, const uint16_t opcode);
 
 /*
 	FUNCTION JUMP TABLES
 */
 
-std::function<void(CPU_State&, const uint16_t)> primaryTable[16] = {
+std::function<void(cpuState&, const uint16_t)> primaryTable[16] = {
    dispatcher_0,
    opcode_1nnn_JUMP,
    opcode_2nnn_CALL,
@@ -80,7 +80,7 @@ std::function<void(CPU_State&, const uint16_t)> primaryTable[16] = {
    dispatcher_F
 };
 
-std::function<void(CPU_State&, const uint16_t)> table_8[16] = {
+std::function<void(cpuState&, const uint16_t)> table_8[16] = {
 	opcode_8xy0_SET, 
 	opcode_8xy1_SET, 
 	opcode_8xy2_SET, 
@@ -99,7 +99,7 @@ std::function<void(CPU_State&, const uint16_t)> table_8[16] = {
 	unknownOpcode
 };
 
-std::map<uint8_t, std::function<void(CPU_State&, const uint16_t)>> table_F = {
+std::map<uint8_t, std::function<void(cpuState&, const uint16_t)>> table_F = {
 	{0x07, opcode_Fx07_DELAY},
 	{0x0A, opcode_Fx0A_KEY},
 	{0x15, opcode_Fx15_DELAY},
@@ -115,7 +115,7 @@ std::map<uint8_t, std::function<void(CPU_State&, const uint16_t)>> table_F = {
 	HELPER FUNCTIONS
 */
 
-void unknownOpcode(CPU_State& state, const uint16_t opcode)
+void unknownOpcode(cpuState& state, const uint16_t opcode)
 {
 	throw "Unknown opcode " + std::to_string(opcode);
 }
@@ -145,7 +145,7 @@ std::pair<uint8_t, uint8_t> extractTwoRegisters(uint16_t opcode)
 	DISPATCHER DEFINITIONS
 */
 
-void dispatcher_0(CPU_State& state, const uint16_t opcode)
+void dispatcher_0(cpuState& state, const uint16_t opcode)
 {
 	uint8_t lastTwoNibbles = opcode & 0x00FF;
 
@@ -163,7 +163,7 @@ void dispatcher_0(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void dispatcher_8(CPU_State& state, const uint16_t opcode)
+void dispatcher_8(cpuState& state, const uint16_t opcode)
 {
 	uint8_t lastNibble = opcode & 0x000F;
 
@@ -172,11 +172,11 @@ void dispatcher_8(CPU_State& state, const uint16_t opcode)
 		throw "Unknown opcode " + std::to_string(opcode);
 	}
 
-	std::function<void(CPU_State&, const uint16_t)> opcodeFunction = table_8[lastNibble];
+	std::function<void(cpuState&, const uint16_t)> opcodeFunction = table_8[lastNibble];
 	opcodeFunction(state, opcode);
 }
 
-void dispatcher_E(CPU_State& state, const uint16_t opcode)
+void dispatcher_E(cpuState& state, const uint16_t opcode)
 {
 	uint8_t lastTwoNibbles = opcode & 0x00FF;
 
@@ -194,7 +194,7 @@ void dispatcher_E(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void dispatcher_F(CPU_State& state, const uint16_t opcode)
+void dispatcher_F(cpuState& state, const uint16_t opcode)
 {
 	uint8_t lastTwoNibbles = opcode & 0x00FF;
 
@@ -214,18 +214,18 @@ void dispatcher_F(CPU_State& state, const uint16_t opcode)
 	OPTCODE DEFINITIONS
 */
 
-void opcode_0nnn_JUMP(CPU_State& state, const uint16_t opcode)
+void opcode_0nnn_JUMP(cpuState& state, const uint16_t opcode)
 {
 	uint16_t jumpLocation = extractJumpLocation(opcode);
 	state.programCounter = jumpLocation;
 }
 
-void opcode_00E0_CLS(CPU_State& state, const uint16_t opcode)
+void opcode_00E0_CLS(cpuState& state, const uint16_t opcode)
 {
 	state.displayRefrence->clearScreen();
 }
 
-void opcode_00EE_RET(CPU_State& state, const uint16_t opcode)
+void opcode_00EE_RET(cpuState& state, const uint16_t opcode)
 {
 	if (state.stackPointer == 0)
 	{
@@ -238,13 +238,13 @@ void opcode_00EE_RET(CPU_State& state, const uint16_t opcode)
 	state.stackPointer -= 1;
 }
 
-void opcode_1nnn_JUMP(CPU_State& state, const uint16_t opcode)
+void opcode_1nnn_JUMP(cpuState& state, const uint16_t opcode)
 {
 	uint16_t jumpLocation = extractJumpLocation(opcode);
 	state.programCounter = jumpLocation;
 }
 
-void opcode_2nnn_CALL(CPU_State& state, const uint16_t opcode)
+void opcode_2nnn_CALL(cpuState& state, const uint16_t opcode)
 {
 	uint16_t subroutineLocation = extractJumpLocation(opcode);
 
@@ -254,7 +254,7 @@ void opcode_2nnn_CALL(CPU_State& state, const uint16_t opcode)
 	state.programCounter = subroutineLocation;
 }
 
-void opcode_3xkk_SKIP(CPU_State& state, const uint16_t opcode)
+void opcode_3xkk_SKIP(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister, compareValue;
 	std::tie(cpuRegister, compareValue) = extractRegisterAndValue(opcode);
@@ -266,7 +266,7 @@ void opcode_3xkk_SKIP(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_4xkk_SKIP(CPU_State& state, const uint16_t opcode)
+void opcode_4xkk_SKIP(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister, compareValue;
 	std::tie(cpuRegister, compareValue) = extractRegisterAndValue(opcode);
@@ -278,7 +278,7 @@ void opcode_4xkk_SKIP(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_5xy0_SKIP(CPU_State& state, const uint16_t opcode)
+void opcode_5xy0_SKIP(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -291,7 +291,7 @@ void opcode_5xy0_SKIP(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_6xkk_SET(CPU_State& state, const uint16_t opcode)
+void opcode_6xkk_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister, setValue;
 	std::tie(cpuRegister, setValue) = extractRegisterAndValue(opcode);
@@ -299,7 +299,7 @@ void opcode_6xkk_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[cpuRegister] = setValue;
 }
 
-void opcode_7xkk_ADD(CPU_State& state, const uint16_t opcode)
+void opcode_7xkk_ADD(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister, addValue;
 	std::tie(cpuRegister, addValue) = extractRegisterAndValue(opcode);
@@ -307,7 +307,7 @@ void opcode_7xkk_ADD(CPU_State& state, const uint16_t opcode)
 	state.registers[cpuRegister] = addValue;
 }
 
-void opcode_8xy0_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy0_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -315,7 +315,7 @@ void opcode_8xy0_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[registerA] = state.registers[registerB];
 }
 
-void opcode_8xy1_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy1_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -323,7 +323,7 @@ void opcode_8xy1_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[registerA] |= state.registers[registerB];
 }
 
-void opcode_8xy2_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy2_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -331,7 +331,7 @@ void opcode_8xy2_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[registerB] |= state.registers[registerB];
 }
 
-void opcode_8xy3_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy3_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -339,7 +339,7 @@ void opcode_8xy3_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[registerB] ^= state.registers[registerB];
 }
 
-void opcode_8xy4_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy4_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -351,7 +351,7 @@ void opcode_8xy4_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[VF] = carry;
 }
 
-void opcode_8xy5_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy5_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -365,7 +365,7 @@ void opcode_8xy5_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[VF] = carry;
 }
 
-void opcode_8xy6_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy6_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -378,7 +378,7 @@ void opcode_8xy6_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[VF] = leastBitIs1;
 }
 
-void opcode_8xy7_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xy7_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -392,7 +392,7 @@ void opcode_8xy7_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[VF] = carry;
 }
 
-void opcode_8xyE_SET(CPU_State& state, const uint16_t opcode)
+void opcode_8xyE_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -405,7 +405,7 @@ void opcode_8xyE_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[VF] = leastBitIs1;
 }
 
-void opcode_9xy0_SKIP(CPU_State& state, const uint16_t opcode)
+void opcode_9xy0_SKIP(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -418,21 +418,21 @@ void opcode_9xy0_SKIP(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_Annn_JUMP(CPU_State& state, const uint16_t opcode)
+void opcode_Annn_JUMP(cpuState& state, const uint16_t opcode)
 {
 	uint16_t jump = extractJumpLocation(opcode);
 
 	state.addressRegisterI = jump;
 }
 
-void opcode_Bnnn_JUMP(CPU_State& state, const uint16_t opcode)
+void opcode_Bnnn_JUMP(cpuState& state, const uint16_t opcode)
 {
 	uint16_t jump = extractJumpLocation(opcode);
 
 	state.programCounter = jump + state.registers[V0];
 }
 
-void opcode_Cxkk_SET(CPU_State& state, const uint16_t opcode)
+void opcode_Cxkk_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister, andValue;
 	std::tie(cpuRegister, andValue) = extractRegisterAndValue(opcode);
@@ -441,7 +441,7 @@ void opcode_Cxkk_SET(CPU_State& state, const uint16_t opcode)
 	state.registers[cpuRegister] = andValue & randomNumber;
 }
 
-void opcode_Dxyn_DISPLAY(CPU_State& state, const uint16_t opcode)
+void opcode_Dxyn_DISPLAY(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerA, registerB;
 	std::tie(registerA, registerB) = extractTwoRegisters(opcode);
@@ -455,7 +455,7 @@ void opcode_Dxyn_DISPLAY(CPU_State& state, const uint16_t opcode)
 	);
 }
 
-void opcode_Ex9E_KEY(CPU_State& state, const uint16_t opcode)
+void opcode_Ex9E_KEY(cpuState& state, const uint16_t opcode)
 {
 	uint8_t keyRegister = (opcode & 0x0F00) >> 8;
 	uint8_t keyIndex = state.registers[keyRegister];
@@ -466,7 +466,7 @@ void opcode_Ex9E_KEY(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_ExA1_KEY(CPU_State& state, const uint16_t opcode)
+void opcode_ExA1_KEY(cpuState& state, const uint16_t opcode)
 {
 	uint8_t keyRegister = (opcode & 0x0F00) >> 8;
 	uint8_t keyIndex = state.registers[keyRegister];
@@ -477,13 +477,13 @@ void opcode_ExA1_KEY(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_Fx07_DELAY(CPU_State& state, const uint16_t opcode)
+void opcode_Fx07_DELAY(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister = (opcode & 0x0F00) >> 8;
 	state.registers[cpuRegister] = state.delayTimer;
 }
 
-void opcode_Fx0A_KEY(CPU_State& state, const uint16_t opcode)
+void opcode_Fx0A_KEY(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister = (opcode & 0x0F00) >> 8;
 	int keyPressed = state.emulatorRefrence->getPressedKey();
@@ -498,7 +498,7 @@ void opcode_Fx0A_KEY(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_Fx15_DELAY(CPU_State& state, const uint16_t opcode)
+void opcode_Fx15_DELAY(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister = (opcode & 0x0F00) >> 8;
 	uint8_t cpuValue = state.registers[cpuRegister];
@@ -506,7 +506,7 @@ void opcode_Fx15_DELAY(CPU_State& state, const uint16_t opcode)
 	state.delayTimer = cpuValue;
 }
 
-void opcode_Fx18_SOUND(CPU_State& state, const uint16_t opcode)
+void opcode_Fx18_SOUND(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister = (opcode & 0x0F00) >> 8;
 	uint8_t cpuValue = state.registers[cpuRegister];
@@ -514,7 +514,7 @@ void opcode_Fx18_SOUND(CPU_State& state, const uint16_t opcode)
 	state.soundTimer = cpuValue;
 }
 
-void opcode_Fx1E_ADD(CPU_State& state, const uint16_t opcode)
+void opcode_Fx1E_ADD(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister = (opcode & 0x0F00) >> 8;
 	uint8_t cpuValue = state.registers[cpuRegister];
@@ -522,7 +522,7 @@ void opcode_Fx1E_ADD(CPU_State& state, const uint16_t opcode)
 	state.addressRegisterI += cpuValue;
 }
 
-void opcode_Fx29_SET(CPU_State& state, const uint16_t opcode)
+void opcode_Fx29_SET(cpuState& state, const uint16_t opcode)
 {
 	uint8_t charecterRegister = (opcode & 0x0F00) >> 8;
 	uint8_t charecterValue = state.registers[charecterRegister] & 0x0F;
@@ -530,7 +530,7 @@ void opcode_Fx29_SET(CPU_State& state, const uint16_t opcode)
 	state.addressRegisterI = charecterValue * 5;
 }
 
-void opcode_Fx33_STORE(CPU_State& state, const uint16_t opcode)
+void opcode_Fx33_STORE(cpuState& state, const uint16_t opcode)
 {
 	uint8_t cpuRegister = (opcode & 0x0F00) >> 8;
 	uint8_t cpuValue = state.registers[cpuRegister];
@@ -551,7 +551,7 @@ void opcode_Fx33_STORE(CPU_State& state, const uint16_t opcode)
 	state.mmuRefrence->writeToMemorryAddress(adress + 1, one);
 }
 
-void opcode_Fx55_STORE(CPU_State& state, const uint16_t opcode)
+void opcode_Fx55_STORE(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerLimit = (opcode & 0x0F00) >> 8;
 	uint8_t registerX = state.registers[registerLimit];
@@ -564,7 +564,7 @@ void opcode_Fx55_STORE(CPU_State& state, const uint16_t opcode)
 	}
 }
 
-void opcode_Fx65_READ(CPU_State& state, const uint16_t opcode)
+void opcode_Fx65_READ(cpuState& state, const uint16_t opcode)
 {
 	uint8_t registerLimit = (opcode & 0x0F00) >> 8;
 	uint8_t registerX = state.registers[registerLimit];
@@ -583,5 +583,8 @@ void opcode_Fx65_READ(CPU_State& state, const uint16_t opcode)
 */
 void CPU::executeOptCode(const uint16_t opcode)
 {
-	
+	uint8_t firstNibble = opcode & 0xF000 >> 12;
+
+	std::function<void(cpuState&, const uint16_t)> opcodeFunction = primaryTable[firstNibble];
+	opcodeFunction(state, opcode);
 }

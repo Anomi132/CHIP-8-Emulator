@@ -67,3 +67,21 @@ void CPU::runClockCycle()
 	uint16_t currentOptCode = getNextInstruction();
 	executeOptCode(currentOptCode);
 }
+
+/*
+	Resets the current state by copying a fresh one into it with the refrences intact
+*/
+void CPU::resetState()
+{
+	MMU* mmuRefrence = state.mmuRefrence;
+	Display* displayRefrence = state.displayRefrence;
+	Emulator* emulatorRefrence = state.emulatorRefrence;
+
+	cpuState newState;
+
+	newState.mmuRefrence = mmuRefrence;
+	newState.displayRefrence = displayRefrence;
+	newState.emulatorRefrence = emulatorRefrence;
+
+	state = newState;
+}

@@ -33,7 +33,7 @@ enum registers
 	Opcodes and architecture obtained from: http://devernay.free.fr/hacks/chip8/C8TECH10.HTM
 */
 
-struct CPU_State
+struct cpuState
 {
 	std::array <uint8_t, 16> registers = { 0 };
 	uint16_t addressRegisterI = 0x0;
@@ -55,7 +55,7 @@ struct CPU_State
 class CPU
 {
 private:
-	CPU_State state;
+	cpuState state;
 
 	uint16_t getNextInstruction();
 	void executeOptCode(const uint16_t opcode);
@@ -71,4 +71,6 @@ public:
 
 	uint8_t getDelayTimer();
 	uint8_t getSoundTimer();
+
+	void resetState();
 };
