@@ -33,9 +33,7 @@ Emulator::Emulator(SDL_Renderer** renderer)
 		SDL_ResumeAudioStreamDevice(_audioStream);
 	}
 
-	// TEMPORRAY ROM LOADING
-	std::string location = "./roms/1-chip8-logo.ch8";
-	this->loadROM(location);
+	openFileWindow();
 }
 
 Emulator::~Emulator()
@@ -51,6 +49,11 @@ Emulator::~Emulator()
 */
 void Emulator::update(double deltaTime)
 {
+	if (_fileLoaded == "")
+	{
+		return;	
+	}
+
 	if (deltaTime > 0.1) {
 		deltaTime = 0.1;
 	}
@@ -166,13 +169,63 @@ int Emulator::getPressedKey()
 }
 
 /*
-	Resets states and loads the ROM at [romLocation]
+	Callback function for the file open SDL window that takes the ROM and tries to load
+	Example from: https://wiki.libsdl.org/SDL3/SDL_DialogFileCallback
+ */
+
+static const SDL_DialogFileFilter filters[] = {
+	{ "CHIP-8 ROM",  "ch8" },
+};
+
+static void SDLCALL loadROMCallback(void* userdata, const char* const* filelist, int filter)
+{
+	Emulator* emulatorRefrence = static_cast<Emulator*>(userdata);
+
+	if (!filelist) {
+		SDL_Log("An error occured: %s", SDL_GetError());
+		return;
+	}
+	else if (!*filelist) {
+		SDL_Log("The user did not select any file.");
+		SDL_Log("Most likely, the dialog was canceled.");
+		return;
+	}
+
+	std::string filename = std::string(*filelist);
+	emulatorRefrence->setFileName(filename);
+	emulatorRefrence->loadROM(filename);
+}
+
+
+/*
+	Calls the function to open a file window
 */
-void Emulator::loadROM(std::string& romLocation)
+void Emulator::openFileWindow()
+{
+	_fileLoaded = "";
+
+	char* currentDir = SDL_GetCurrentDirectory();
+	const char* defaultLocation = currentDir? currentDir : NULL;
+
+	SDL_ShowOpenFileDialog(loadROMCallback, this, NULL, filters, 1, std::string(defaultLocation).c_str(), 0);
+}
+
+/*
+	Resets states and loads the rom
+*/
+void Emulator::loadROM(std::string& file)
 {
 	_emulatorCPU.resetState();
 	_emulatorMMU.resetMemorry();
 	_emulatorDisplay.clearScreen();
 
-	_emulatorMMU.loadFromFile(romLocation);
+	_emulatorMMU.loadFromFile(file);
+}
+
+/*
+	Sets [_fileLoaded] so we can check if the emulator has anything to run
+*/
+void Emulator::setFileName(std::string& file)
+{
+	_fileLoaded = file;
 }

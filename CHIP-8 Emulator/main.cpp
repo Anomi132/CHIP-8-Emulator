@@ -29,21 +29,37 @@ SDL_AppResult SDL_AppInit(void** appstate, int argc, char* argv[])
 
     srand(time(nullptr));
 
+    Emulator* emulator = new Emulator(&renderer);
+    *appstate = emulator;
+
     return SDL_APP_CONTINUE;  
 }
 
 /* This function runs when a new event (mouse input, keypresses, etc) occurs. */
 SDL_AppResult SDL_AppEvent(void* appstate, SDL_Event* event)
 {
+    Emulator* emulator = static_cast<Emulator*>(appstate);
+
     if (event->type == SDL_EVENT_QUIT) {
-        return SDL_APP_SUCCESS;  
+        return SDL_APP_SUCCESS;
     }
+
+    if (event->type == SDL_EVENT_KEY_DOWN)
+    {
+        if (event->key.key == SDLK_F1)
+        {
+            emulator->openFileWindow();
+        }
+    }
+
     return SDL_APP_CONTINUE; 
 }
 
 /* This function runs once per frame, and is the heart of the program. */
 SDL_AppResult SDL_AppIterate(void* appstate)
 {
+    Emulator* emulator = static_cast<Emulator*>(appstate);
+
     static Uint64 lastTime = 0;
     Uint64 currentTime = SDL_GetTicksNS();
 
@@ -51,11 +67,9 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 
     double deltaTime = (double)(currentTime - lastTime) / 1000000000.0;
 
-    static Emulator emulator = Emulator(&renderer);
-
     try
     {
-        emulator.update(deltaTime);
+        emulator->update(deltaTime);
     }
     catch(const std::exception& e)
     {

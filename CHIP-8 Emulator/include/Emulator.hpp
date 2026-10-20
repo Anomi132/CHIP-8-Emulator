@@ -37,6 +37,8 @@ private:
 
 	bool keypad[16] = { 0 };
 
+	std::string _fileLoaded = "";
+
 private:
 
 	void playSound();
@@ -44,6 +46,7 @@ private:
 public:
 
 	Emulator(SDL_Renderer** renderer);
+	Emulator() {};
 	~Emulator();
 
 	void update(double deltaTime);
@@ -52,5 +55,7 @@ public:
 	int getPressedKey();
 	void updateKeyboard();
 
-	void loadROM(std::string& romLocation);
+	void openFileWindow();
+	void loadROM(std::string& file);
+	void setFileName(std::string& file);
 };
