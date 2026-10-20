@@ -57,9 +57,9 @@ SDL_AppResult SDL_AppIterate(void* appstate)
     {
         emulator.update(deltaTime);
     }
-    catch(const char* msg)
+    catch(const std::exception& e)
     {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", msg, NULL); // Window set to NULL so you can stil exit incase of a error loop
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", e.what(), NULL); // Window set to NULL so you can stil exit incase of a error loop
     }
         
     lastTime = currentTime;
@@ -70,5 +70,5 @@ SDL_AppResult SDL_AppIterate(void* appstate)
 
 void SDL_AppQuit(void* appstate, SDL_AppResult result)
 {
-    
+  
 }

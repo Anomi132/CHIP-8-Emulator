@@ -18,7 +18,7 @@ uint8_t MMU::readMemorryAddress(const uint16_t address)
 {
 	if (address >= 4096) // Max memorry
 	{
-		throw "Accessed address outside memorry range (0-4095): " + std::to_string(address);
+		throw std::out_of_range("Accessed address outside memorry range (0-4095): " + std::to_string(address));
 	}
 
 	return _memoryMap[address];
@@ -31,7 +31,7 @@ void MMU::writeToMemorryAddress(const uint16_t address, const uint8_t data)
 {
 	if (address >= 4096) // Max memorry
 	{
-		throw "Written address outside memorry range (0-4095): " + std::to_string(address);
+		throw std::out_of_range("Written address outside memorry range (0-4095): " + std::to_string(address));
 	}
 
 	_memoryMap[address] = data;
@@ -54,10 +54,14 @@ void MMU::loadFromFile(std::string& romLocation)
 	std::ifstream file(romLocation, std::ios::binary | std::ios::ate);
 
 	if (!file.is_open()) {
-		throw "Cant load from file on location: " + romLocation;
+		throw std::runtime_error("Cant load from file on location: " + romLocation);
 	}
 
 	std::streampos size = file.tellg(); // Becuase of ate the index is at the end;
+
+	if (size > (4096 - 0x200)) {
+		throw std::runtime_error("ROM is too large to fit in CHIP-8 memory!");
+	}
 
 	file.seekg(0, std::ios::beg);
 

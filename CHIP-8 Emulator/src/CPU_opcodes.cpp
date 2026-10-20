@@ -119,7 +119,7 @@ std::map<uint8_t, std::function<void(cpuState&, const uint16_t)>> table_F = {
 
 void unknownOpcode(cpuState& state, const uint16_t opcode)
 {
-	throw "Unknown opcode " + std::to_string(opcode);
+	throw std::runtime_error("Unknown opcode " + std::to_string(opcode));
 }
 
 uint16_t extractJumpLocation(uint16_t opcode)
@@ -171,7 +171,7 @@ void dispatcher_8(cpuState& state, const uint16_t opcode)
 
 	if (lastNibble > 0xE)
 	{
-		throw "Unknown opcode " + std::to_string(opcode);
+		throw std::runtime_error("Unknown opcode " + std::to_string(opcode));
 	}
 
 	std::function<void(cpuState&, const uint16_t)> opcodeFunction = table_8[lastNibble];
@@ -192,7 +192,7 @@ void dispatcher_E(cpuState& state, const uint16_t opcode)
 	}
 	else
 	{
-		throw "Unknown opcode " + std::to_string(opcode);
+		throw std::runtime_error("Unknown opcode " + std::to_string(opcode));
 	}
 }
 
@@ -231,7 +231,7 @@ void opcode_00EE_RET(cpuState& state, const uint16_t opcode)
 {
 	if (state.stackPointer == 0)
 	{
-		throw "No subroutine to return to at program counter location: " + std::to_string(state.programCounter);
+		throw std::runtime_error("No subroutine to return to at program counter location: " + std::to_string(state.programCounter));
 	}
 
 	state.programCounter = state._stack.top();

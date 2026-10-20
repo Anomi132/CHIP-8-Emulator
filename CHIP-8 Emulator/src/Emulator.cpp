@@ -25,16 +25,25 @@ Emulator::Emulator(SDL_Renderer** renderer)
 		NULL,
 		NULL
 	);
-	SDL_ResumeAudioStreamDevice(_audioStream);	
+	
+	if (!_audioStream) {
+		SDL_Log("Failed to open audio stream: %s", SDL_GetError());
+	}
+	else {
+		SDL_ResumeAudioStreamDevice(_audioStream);
+	}
 
 	// TEMPORRAY ROM LOADING
-	std::string location = "./roms/8-scrolling.ch8";
+	std::string location = "./roms/1-chip8-logo.ch8";
 	this->loadROM(location);
 }
 
 Emulator::~Emulator()
 {
-	SDL_DestroyAudioStream(_audioStream);
+	if (_audioStream) {
+		SDL_DestroyAudioStream(_audioStream);
+		_audioStream = nullptr;
+	}
 }
 
 /*
@@ -42,6 +51,10 @@ Emulator::~Emulator()
 */
 void Emulator::update(double deltaTime)
 {
+	if (deltaTime > 0.1) {
+		deltaTime = 0.1;
+	}
+
 	updateKeyboard();
 
 	_accumulator += deltaTime;
@@ -66,6 +79,8 @@ void Emulator::update(double deltaTime)
 		}
 
 		_timerAccumulator -= TIME_FOR_TIMER;
+
+		_emulatorDisplay.draw();
 	}
 }
 
@@ -127,7 +142,7 @@ bool Emulator::getKeyStateById(uint8_t index)
 {
 	if (index >= 16)
 	{
-		throw "This key does not exist index: " + std::to_string(index);
+		throw std::runtime_error("This key does not exist index: " + std::to_string(index));
 	}
 
 	return keypad[index];

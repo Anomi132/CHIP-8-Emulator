@@ -79,6 +79,5 @@ bool Display::drawSprite(uint16_t x, uint16_t y, uint16_t address, uint16_t numb
         }
     }
 
-    draw();
     return collision;
 }
