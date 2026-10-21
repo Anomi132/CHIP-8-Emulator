@@ -3,7 +3,7 @@
 #include <cstdlib>
 #include <time.h>
 
-#include "cpu.hpp"
+#include "CPU.hpp"
 #include "MMU.hpp"
 
 CPU::CPU(MMU* mmu, Display* display, Emulator* emulator)

@@ -3,9 +3,9 @@
 #include <tuple>
 #include <map>
 
-#include "cpu.hpp"
+#include "CPU.hpp"
 #include "display.hpp"
-#include "emulator.hpp"
+#include "Emulator.hpp"
 
 /*
 	OPCODE FUCTION DECLARATIONS

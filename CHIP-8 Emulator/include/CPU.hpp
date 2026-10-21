@@ -2,6 +2,8 @@
 
 #include <array>
 #include <stack>
+#include <cstdint>
+
 
 class MMU;
 class Display;

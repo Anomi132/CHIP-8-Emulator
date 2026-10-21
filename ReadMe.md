@@ -41,8 +41,8 @@ Run the compiled executable from your build directory:
 
 ```bash
 # On Windows:
-.\build\Release\CHIP-8.exe
+& '.\build\CHIP-8 Emulator\Release\chip8.exe'
 
 # On Linux:
-./build/CHIP-8
+./build/CHIP-8\ Emulator/chip8 
 ```

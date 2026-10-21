@@ -1,7 +1,7 @@
 ﻿
 
 set(mySources
-    "src/emulator.cpp"
+    "src/Emulator.cpp"
     "src/MMU.cpp"
  "src/cpu.cpp" "src/display.cpp" "src/CPU_opcodes.cpp")
 add_executable(chip8 
