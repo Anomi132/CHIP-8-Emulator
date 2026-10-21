@@ -1,5 +1,5 @@
 # Chip-8 Emulator
-A emulator for the Chip-8 hardware writen in C++ with SDL3 for rendering based on [Cowgod's](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM) documentation from 1997
+An emulator for the Chip-8 hardware written in C++ with SDL3 for rendering based on [Cowgod's](http://devernay.free.fr/hacks/chip8/C8TECH10.HTM) documentation from 1997
 
 | CHIP-8 Logo | IBM Logo | Opcode Test (Corax+) | Flags Test |
 | :---: | :---: | :---: | :---: |
@@ -7,6 +7,22 @@ A emulator for the Chip-8 hardware writen in C++ with SDL3 for rendering based o
 | **Quirks Test** | **Keypad Test** | **Audio Beep Test** | **Rock Paper Scissors** |
 | ![Quirks Test](docs/images/quirks_test.png) | ![Keyboard Test](docs/images/keyboard_test.png) | ![Beep Test](docs/images/beep_test.png) | ![Rock Paper Scissors](docs/images/RPS.png) |
 
+## 🎮 Controls
+
+The original CHIP-8 16-key hexadecimal keypad is mapped to a 4x4 grid on standard QWERTY keyboards:
+
+```text
+QWERTY Keyboard:             CHIP-8 Keypad:
++---+---+---+---+            +---+---+---+---+
+| 1 | 2 | 3 | 4 |            | 1 | 2 | 3 | C |
++---+---+---+---+            +---+---+---+---+
+| Q | W | E | R |   ====>    | 4 | 5 | 6 | D |
++---+---+---+---+            +---+---+---+---+
+| A | S | D | F |            | 7 | 8 | 9 | E |
++---+---+---+---+            +---+---+---+---+
+| Z | X | C | V |            | A | 0 | B | F |
++---+---+---+---+            +---+---+---+---+
+```
 
 ## Getting started
 
