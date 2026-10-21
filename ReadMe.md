@@ -7,7 +7,7 @@ An emulator for the Chip-8 hardware written in C++ with SDL3 for rendering based
 | **Quirks Test** | **Keypad Test** | **Audio Beep Test** | **Rock Paper Scissors** |
 | ![Quirks Test](docs/images/quirks_test.png) | ![Keyboard Test](docs/images/keyboard_test.png) | ![Beep Test](docs/images/beep_test.png) | ![Rock Paper Scissors](docs/images/RPS.png) |
 
-## 🎮 Controls
+## Keyboard mapping
 
 The original CHIP-8 16-key hexadecimal keypad is mapped to a 4x4 grid on standard QWERTY keyboards:
 
