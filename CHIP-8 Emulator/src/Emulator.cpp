@@ -63,7 +63,7 @@ void Emulator::update(double deltaTime)
 	_accumulator += deltaTime;
 	while (_accumulator >= TIME_PER_CYCLE)
 	{
-		_emulatorCPU.runClockCycle();
+		_emulatorCPU.runClockCycle(); 
 		_accumulator -= TIME_PER_CYCLE;
 	}
 
@@ -202,12 +202,11 @@ static void SDLCALL loadROMCallback(void* userdata, const char* const* filelist,
 */
 void Emulator::openFileWindow()
 {
-	_fileLoaded = "";
 
 	char* currentDir = SDL_GetCurrentDirectory();
 	const char* defaultLocation = currentDir? currentDir : NULL;
 
-	SDL_ShowOpenFileDialog(loadROMCallback, this, NULL, filters, 1, std::string(defaultLocation).c_str(), 0);
+	SDL_ShowOpenFileDialog(loadROMCallback, this, NULL, filters, 1, defaultLocation, 0);
 }
 
 /*
@@ -218,6 +217,8 @@ void Emulator::loadROM(std::string& file)
 	_emulatorCPU.resetState();
 	_emulatorMMU.resetMemorry();
 	_emulatorDisplay.clearScreen();
+
+	_fileLoaded = file;
 
 	_emulatorMMU.loadFromFile(file);
 }
