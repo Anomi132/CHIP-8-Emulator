@@ -24,6 +24,8 @@ QWERTY Keyboard:             CHIP-8 Keypad:
 +---+---+---+---+            +---+---+---+---+
 ```
 
+Presing F1 allows you to load another ROM while the emulator is running
+
 ## Getting started
 
 ### Prerequisites
